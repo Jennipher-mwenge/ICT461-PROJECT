@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COURSE REGISTRATION</title>
+<style>
+*{
+    box-sizing:border-box;
+    font-family:system-ui,
+    Arial
+}
+body{
+    background:#e1e4e9;
+    margin:0;
+    display:flex;
+    justify-content:center;
+    padding:20px
+}
+main{
+    width:100%;
+    max-width:480px;
+    background:#f1f4f5;
+    padding:28px;
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,.1)
+}
+header h1{
+    font-size:1.4rem;
+    text-align:center;
+    color:#1362b1;
+    margin:0 0 8px
+    
+}
+header p{
+    text-align:center;
+    color:#0e0d0d;
+    margin:0 0 20px
+}
+label{
+    display:block;
+    margin:14px 0 6px;
+    font-weight:600
+    
+}
+input,select{
+    width:100%;
+    padding:11px;
+    border:1px solid #ccc;
+    border-radius:6px
+}
+input:focus,select:focus{
+    border-color:#0b63f6;
+    outline:3px solid rgba(11,99,246,.2)
+}
+.error{
+    color:#c0392b;
+    font-size:.85rem;
+    min-height:18px;
+    margin-top:4px
+}
+.success{
+    background:lab(58.1% 4.28 -49.36);
+    color:#e7eef0;
+    padding:10px;
+    border-radius:6px;
+    margin-top:16px;
+    display:none
+}
+button{
+    width:100%;
+    margin-top:18px;
+    padding:12px;
+    background:#0b63f6;
+    color:#fff;
+    border:0;
+    border-radius:6px;
+    font-weight:700;
+    cursor:pointer
+}SS
+button:hover{
+    background:#084ec2
+}
+@media(max-width:600px){main{padding:18px}}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>COURSE REGISTRATION SYSTEM</h1>
+    <p>Web Systems and Technology</p>
+  </header>
+
+  <form id="regForm" novalidate>
+    <label for="name">Full Name</label>
+    <input type="text" id="name" name="name" required minlength="2" pattern="[A-Za-z\s]+" autocomplete="name">
+    <div class="error" id="nameError"></div>
+
+    <label for="studentId">Student ID</label>
+    <input type="text" id="studentId" name="studentId" required pattern="[A-Z0-9]{6,10}" inputmode="text">
+    <div class="error" id="idError"></div>
+
+    <label for="programme">Programme</label>
+    <select id="programme" name="programme" required>
+      <option value="">-- Select --</option>
+      <option>IT</option>
+      <option>Cyber security</option>
+      <option>Computer Science</option>
+      <option>Engineering</option>
+    </select>
+    <div class="error" id="progError"></div>
+
+    <label for="course">Course</label>
+    <select id="course" name="course" required>
+      <option value="">-- Select Course --</option>
+      <option>ICS461 </option>
+      <option>ICT441 </option>
+      <option>ICT281 </option>
+    </select>
+    <div class="error" id="courseError"></div>
+
+    <button type="submit">Register</button>
+    <div class="success" id="successMsg" role="status"></div>
+  </form>
+</main>
+
+<script>
+// ONE JS interaction - validation + success message
+const form = document.getElementById('regForm');
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  let valid = true;
+  
+  const name = document.getElementById('name');
+  const id = document.getElementById('studentId');
+  
+  document.getElementById('nameError').textContent = name.validity.valid ? '' : 'Enter at least 2 letters, no numbers';
+  document.getElementById('idError').textContent = id.validity.valid ? '' : 'Student ID must be 6-10 letters/numbers';
+  
+  if(!name.validity.valid || !id.validity.valid) valid = false;
+  if(!form.checkValidity()) valid = false;
+
+  if(valid){
+    document.getElementById('successMsg').style.display='block';
+    document.getElementById('successMsg').textContent = `Registered: ${name.value} for ${document.getElementById('course').value}`;
+  }
+});
+</script>
+</body>
+</html>
